@@ -321,14 +321,14 @@ code { font-family: var(--mono); font-size: 12px; background: var(--code-bg); pa
 <h2 id="buttons">Buttons</h2>
 
 <div class="preview preview-white">
-  <button style="width:160px;height:44px;border-radius:40px;background:#2196F3;color:white;border:none;font:700 14px Inter;cursor:pointer">Save</button>
-  <button style="width:160px;height:44px;border-radius:40px;background:#ECEEF0;color:#C5CBD1;border:none;font:700 14px Inter;cursor:default">Save</button>
-  <button style="width:180px;height:44px;border-radius:40px;background:white;color:#2196F3;border:1px solid #2196F3;font:700 14px Inter;cursor:pointer">Add Customer</button>
+  <button style="width:160px;height:44px;border-radius:4px;background:#2196F3;color:white;border:none;font:700 14px Inter;cursor:pointer">Save</button>
+  <button style="width:160px;height:44px;border-radius:4px;background:#ECEEF0;color:#C5CBD1;border:none;font:700 14px Inter;cursor:default">Save</button>
+  <button style="width:180px;height:44px;border-radius:4px;background:white;color:#2196F3;border:1px solid #2196F3;font:700 14px Inter;cursor:pointer">Add Customer</button>
 </div>
 
 <div class="code-block" id="btn-code"><button class="copy-btn" onclick="copyCode('btn-code')">Copy CSS</button><span class="sel">.btn</span> {
   <span class="prop">height</span>: <span class="val">44px</span>;
-  <span class="prop">border-radius</span>: <span class="val">40px</span>;          <span class="comment">/* pill */</span>
+  <span class="prop">border-radius</span>: <span class="val">4px</span>;          <span class="comment">/* matches Kotak SaaS */</span>
   <span class="prop">font</span>: <span class="val">700 14px/1 'Inter'</span>;
   <span class="prop">padding</span>: <span class="val">12px 16px</span>;
   <span class="prop">border</span>: <span class="val">none</span>;
@@ -392,6 +392,8 @@ code { font-family: var(--mono); font-size: 12px; background: var(--code-bg); pa
 <span class="sel">.toggle-chip--off</span> {
   <span class="prop">background</span>: <span class="val">#FFFFFF</span>; <span class="prop">color</span>: <span class="val">#003366</span>; <span class="prop">border</span>: <span class="val">1px solid #E2E5E8</span>;
 }</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:8px;">⚠️ <strong>Note:</strong> Toggle chips use 40px radius (pill shape) while action buttons use 4px radius to match existing Kotak SaaS app design system.</p>
 
 <!-- ============================== CARDS ============================== -->
 <h2 id="cards">Cards &amp; Layout</h2>
