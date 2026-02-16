@@ -2,247 +2,1197 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GRT Meeting Details — Product Manager View</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=360, initial-scale=1.0">
+<title>GRT Meeting Details — Enhanced Screens (Figma Token-Traced)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: #F8F9FB; color: #1B242C; line-height: 1.6; }
-.container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+/*
+ * ============================================================
+ * LOANBOOK FIELD STAFF DESIGN SYSTEM — ALL TOKENS FROM FIGMA
+ * Figma file: ynrZ50gvTh5yb20gwciKcI
+ * Component page node: 525:4790
+ * JSON source: docs/figma-loanbook-field-staff-screens.md
+ * Design system: memory/loanbook-field-staff-design-system.md
+ * Sally review: 2026-02-13
+ * ============================================================
+ */
 
-/* Header */
-header { background: linear-gradient(135deg, #2196F3 0%, #003366 100%); color: #fff; padding: 48px 32px; border-radius: 12px; margin-bottom: 32px; }
-header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-header p { font-size: 16px; opacity: 0.95; }
+/* ─── COLOR PALETTE (Figma Components > Color Palette) ─── */
+:root {
+  --blue-900: #2196F3;   /* Primary CTA, active elements, section labels */
+  --blue-800: #37A0F4;
+  --blue-700: #4DA8F5;
+  --blue-600: #64B0F7;   /* Primary Hover */
+  --blue-500: #7ACDF8;
+  --blue-400: #90CAF9;   /* Disabled CTA (light) */
+  --blue-300: #A6D5FA;
+  --blue-200: #BCDFFB;
+  --blue-100: #D3EAFD;   /* Info border (light) */
+  --blue-50:  #E9F4FE;   /* Info highlight bg — used in "In Progress" GRT */
 
-/* Flow Section */
-.flow-section { margin-bottom: 48px; }
-.flow-section h2 { font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #003366; padding-bottom: 12px; border-bottom: 2px solid #2196F3; }
+  --dark-900: #003366;   /* Header bg, primary text, overlays */
+  --dark-800: #194775;
+  --dark-700: #335C84;
+  --dark-600: #4C7094;
+  --dark-500: #6684A3;   /* Secondary text, input labels */
+  --dark-400: #B099B2;
+  --dark-300: #99ADC2;
+  --dark-200: #B2C2D1;   /* Version labels (v1/v2) */
+  --dark-100: #CCD6E0;   /* Chip active bg (GRT section 28: Frame 48096086) */
+  --dark-50:  #E5EBF0;   /* Figma section backgrounds */
 
-/* Screen Grid */
-.screen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  --grey-500: #C5CBD1;   /* Disabled text */
+  --grey-300: #D8DCE0;   /* Disabled CTA bg */
+  --grey-200: #E2E5E8;   /* Input border default, category bar border */
+  --grey-100: #ECEEF0;   /* Disabled btn bg, close button bg */
+  --grey-50:  #F5F6F7;   /* Page background */
 
-/* Screen Card */
-.screen-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.screen-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
-.screen-number { display: inline-block; background: #2196F3; color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
-.screen-title { font-size: 18px; font-weight: 600; color: #003366; margin-bottom: 8px; }
-.screen-desc { font-size: 14px; color: #6B7280; margin-bottom: 16px; line-height: 1.6; }
-.screen-img { width: 100%; border: 1px solid #E2E5E8; border-radius: 8px; margin-bottom: 12px; cursor: pointer; }
-.screen-img:hover { border-color: #2196F3; }
+  --green-900: #1A9F00;  /* Success, completed steps */
+  --green-500: #75C666;  /* Toast border */
+  --green-100: #D1ECCC;  /* Success badge border */
+  --green-50:  #E8F5E5;  /* Success badge/toast bg */
 
-/* Features List */
-.features { list-style: none; margin-top: 12px; }
-.features li { font-size: 13px; color: #4C7094; padding: 4px 0; padding-left: 20px; position: relative; }
-.features li::before { content: "✓"; position: absolute; left: 0; color: #1A9F00; font-weight: 700; }
+  --red-900: #C53434;    /* Error, destructive */
+  --red-50:  #F9EBEB;    /* Error bg */
 
-/* User Story Box */
-.user-story { background: #E9F4FE; border-left: 4px solid #2196F3; padding: 16px 20px; border-radius: 4px; margin-bottom: 24px; }
-.user-story strong { color: #003366; }
+  --yellow-900: #F4A246; /* Warning */
+  --yellow-50:  #FEF6EC; /* Warning bg */
 
-/* Lightbox */
-.lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
-.lightbox.active { display: flex; }
-.lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; }
-.close-btn { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 32px; cursor: pointer; font-weight: 300; }
+  --white: #FFFFFF;
+  --black: #000000;
+
+  /* ─── SEMANTIC (mapped to Figma usage) ─── */
+  --bg-page: var(--grey-50);
+  --bg-card: var(--white);
+  --text-primary: var(--dark-900);
+  --text-secondary: var(--dark-500);
+  --text-caption: #90939E;          /* Figma: caption text color */
+  --accent: var(--blue-900);
+  --card-border: #CDE6FB;           /* Figma: most common info card border */
+  --card-border-active: var(--accent);
+  --info-bg: #E9F4FE;               /* Figma: Frame 48096269 bg */
+  --info-border: #D3EAFD;           /* Figma: Frame 48096269 border */
+
+  /* ─── SHADOWS (Figma Effect Styles) ─── */
+  --shadow-raised:  0 2px 8px rgba(27,36,44,0.08);
+  --shadow-pressed: 0 -2px 2px rgba(27,36,44,0.04);
+  --shadow-dialog:  0 4px 24px rgba(0,0,0,0.16);
+  --shadow-sheet:   0 -4px 16px rgba(0,51,102,0.12);
+  --shadow-bottom:  0 -2px 16px rgba(90,90,90,0.08);
+
+  /* ─── BORDER RADII (Figma usage) ─── */
+  --r-xs:   4px;    /* Checkbox r:4px */
+  --r-sm:   6px;    /* Toast r:6px (from success toast border) */
+  --r-md:   8px;    /* Input field r:8px */
+  --r-lg:   12px;   /* Center info cards (Frame 243 r:12px), CTAs */
+  --r-xl:   16px;   /* Customer cards (328×88 r:16px), meeting card, dialog */
+  --r-2xl:  24px;   /* Camera/action buttons */
+  --r-pill: 40px;   /* Button pill, back button, filter chips */
+  --r-full: 100px;  /* Chip dots (GRT filter chips r:100px) */
+
+  /* ─── TYPOGRAPHY (Figma Components > Typography) ─── */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--dark-50);
+  color: var(--text-primary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 40px;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── SCREEN FRAME (360×800 standard, Figma) ─── */
+.screen {
+  width: 360px;
+  min-height: 800px;
+  background: var(--bg-page);       /* bg:#F5F6F7 — GRT/Center screens */
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+/* FIX-B: Meeting Details edit screens use whiter bg per screenshot */
+.screen-white { background: #FFFFFF; }
+.screen-white .status-bar { background: #FFFFFF; }
+.screen-white .header { background: #FFFFFF; }
+
+/* ─── STATUS BAR (Figma: 360×32, Roboto 14.4px w500) ───
+   FIX-G: Proper signal/wifi/battery shapes from Status Bar PNG
+   ─── */
+.status-bar {
+  width: 360px;
+  height: 32px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-page);
+}
+.status-bar .time {
+  font-family: var(--font-roboto);
+  font-size: 14.4px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.status-bar .icons { display: flex; gap: 5px; align-items: center; }
+.status-bar .icons svg { fill: var(--text-primary); }
+
+/* ─── HEADER (Figma: Frame 48096106, 360×64, bg:#F5F6F7) ─── */
+.header {
+  width: 360px;
+  height: 64px;                     /* Figma: Frame 48096106 height 64 */
+  padding: 0 20px;                  /* Figma: content padding 20px */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-page);
+}
+.back-btn {
+  width: 40px; height: 40px;       /* Figma: Frame 48096023, 40×40 */
+  background: var(--white);        /* Figma: bg:#FFFFFF */
+  border-radius: var(--r-pill);    /* Figma: r:40px */
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-raised);
+  border: none; cursor: pointer;
+}
+.back-btn svg {
+  width: 24px; height: 24px;       /* Figma: Icon 24×24 */
+  stroke: var(--text-primary);     /* Figma: stroke:#003366 (primary) */
+  fill: none; stroke-width: 2;     /* Figma: stroke-width 2px */
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.header-title {
+  font-size: 16px;                  /* Figma: Inter 16px */
+  font-weight: 700;                /* Figma: w700 (Bold) */
+  color: var(--text-primary);
+  flex: 1;
+}
+.header-icon {
+  width: 24px; height: 24px;       /* Figma: Icon 24×24 */
+  cursor: pointer;
+}
+.header-icon svg {
+  width: 24px; height: 24px;
+  stroke: var(--text-primary); fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ─── CONTENT AREA (20px horizontal padding) ─── */
+.content {
+  padding: 0 12px 24px;            /* 12px to allow 336px cards = (360-336)/2 */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                        /* FIX #4: Screenshot shows more spacing between fields */
+}
+
+/* ─── CENTER INFO CARD ───
+   Figma "In Review" S23: Frame 243, 336×136, bg:#FFFFFF r:12px
+   Contains: Frame 130514 (304×40) name area + Frame 48096187 (304×68) details
+   ─── */
+.center-card {
+  width: 336px;                     /* Figma: 336px */
+  background: var(--bg-card);
+  border-radius: var(--r-lg);      /* Figma: r:12px */
+  padding: 16px;
+  box-shadow: var(--shadow-raised);
+}
+.center-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.center-avatar {
+  width: 56px; height: 56px;       /* Approximate from Figma photo */
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dark-700), var(--dark-900));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+  font-size: 18px; font-weight: 700;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.center-name {
+  font-size: 16px;                  /* Figma: Inter 16px w700 (same as header) */
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.center-id {
+  font-size: 12px;                  /* Figma: Inter 12px w400 (Caption 1 R) */
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ─── MEETING DETAILS CARD ───
+   Figma "In Review" S28: Frame 130897, 328×88, bg:#FFFFFF r:16px
+   Contains: Frame 48096271 (296×24) header + Frame 48096272 (126×24) content
+   ─── */
+.meeting-card {
+  width: 336px;
+  background: var(--bg-card);
+  border-radius: var(--r-lg);      /* Using r:12px like other center cards */
+  padding: 16px;
+  box-shadow: var(--shadow-raised);
+}
+.meeting-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--grey-100);
+}
+.meeting-label {
+  font-size: 14px;                  /* Figma: Inter 14px w600 (Sub Heading 2) */
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.edit-link {
+  font-size: 14px;                  /* Figma: Inter 14px w600 */
+  font-weight: 600;
+  color: var(--accent);            /* Figma: #2196F3 */
+  cursor: pointer;
+  text-decoration: none;
+}
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+.detail-key {
+  font-size: 14px;                  /* Figma: Inter 14px */
+  font-weight: 600;                /* Figma: w600 (Sub Heading 2) */
+  color: var(--text-primary);
+}
+.detail-val {
+  font-size: 14px;                  /* Figma: Inter 14px */
+  font-weight: 400;                /* Figma: w400 (Body 2) */
+  color: var(--text-primary);
+  text-align: right;
+}
+.detail-divider {
+  height: 1px;
+  background: var(--grey-100);
+  margin: 6px 0;
+}
+
+/* ─── HISTORY ROW ───
+   Figma "In Review" S29: Frame 130897, 328×56, bg:#FFFFFF r:16px + Arrow Right 24×24
+   ─── */
+.history-row {
+  width: 336px;
+  height: 56px;                     /* Figma: 328×56 (adjusted to 336 for consistency) */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--bg-card);
+  border-radius: var(--r-xl);      /* Figma: r:16px */
+  box-shadow: var(--shadow-raised);
+  cursor: pointer;
+}
+.history-text {
+  font-size: 14px;
+  font-weight: 600;                /* Figma: Sub Heading 2 */
+  color: var(--text-primary);
+}
+.history-row svg {
+  width: 24px; height: 24px;       /* Figma: Arrow Right 24×24 */
+  stroke: var(--text-secondary);
+  fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ─── SECTION LABEL ───
+   Figma: "Customers" Inter 14px w600
+   ─── */
+.section-label {
+  font-size: 14px;
+  font-weight: 600;                /* Figma: Inter 14px w600 */
+  color: var(--text-primary);
+  padding: 0 4px;
+}
+
+/* ─── FILTER CHIPS ───
+   Figma "In Review" S28: Frame 48096085 (172×31)
+   Active: Frame 48096086 (90×31) bg:#CCD6E0 border:#CCD6E0 r:100px
+   Inactive: Frame 48096085 (74×31) border:#CCD6E0 r:100px
+   ─── */
+.chip-row { display: flex; gap: 8px; padding: 0 4px; }
+.chip {
+  height: 31px;                     /* Figma: 31px height */
+  padding: 0 12px;
+  border-radius: var(--r-full);    /* Figma: r:100px */
+  font-size: 12px;                  /* Figma: Inter 12px */
+  font-weight: 600;                /* Figma: w600 */
+  display: flex; align-items: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.chip-active {
+  background: var(--dark-100);     /* Figma: bg:#CCD6E0 */
+  border-color: var(--dark-100);   /* Figma: border:#CCD6E0 */
+  color: var(--text-primary);
+}
+.chip-inactive {
+  background: var(--white);
+  border-color: var(--dark-100);   /* Figma: border:#CCD6E0 */
+  color: var(--text-primary);
+}
+
+/* ─── CUSTOMER CARD (GRT attendance) ───
+   Figma "In Review" S28: Frame 48096157, 328×88, bg:#FFFFFF r:16px
+   ─── */
+.cust-card {
+  width: 336px;
+  min-height: 72px;                 /* Figma: ~88px with padding */
+  background: var(--bg-card);
+  border-radius: var(--r-xl);      /* Figma: r:16px */
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-raised);
+}
+/* Checkbox: 20×20, r:4px, border:2px #2196F3 */
+.cbox {
+  width: 20px; height: 20px;       /* Figma: Checkbox 20×20 */
+  border: 2px solid var(--accent); /* Figma: border:2px #2196F3 */
+  border-radius: var(--r-xs);     /* Figma: r:4px */
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.cbox.checked { background: var(--accent); border-color: var(--accent); }
+.cbox.checked svg { stroke: var(--white); }
+/* Avatar circle */
+.cust-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--grey-100);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.cust-avatar svg { width: 24px; height: 24px; stroke: var(--text-secondary); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.cust-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.cust-id { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 1px; }
+
+/* ─── BUTTON (Figma: Button component, pill r:40px, 44px height) ─── */
+.btn {
+  width: 320px;                     /* Figma: Button 320×44 */
+  height: 44px;                     /* Figma: 44px */
+  border-radius: var(--r-pill);    /* Figma: r:40px */
+  font-family: var(--font);
+  font-size: 14px;                  /* Figma: Inter 14px */
+  font-weight: 700;                /* Figma: w700 */
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;                         /* Figma: gap 8px (icon+text) */
+  padding: 12px 16px;              /* Figma: padding 12px 16px */
+  margin: 0 auto;
+}
+.btn-primary { background: var(--accent); color: var(--white); }             /* Figma: Primary Filled */
+.btn-primary:hover { background: var(--blue-600); }                          /* Figma: Primary Hover */
+.btn-disabled { background: var(--grey-100); color: var(--grey-500); cursor: not-allowed; }  /* Figma: Primary Disabled */
+.btn-outlined { background: var(--white); color: var(--accent); border: 1px solid var(--accent); }  /* Figma: Primary Outlined */
+
+/* ─── INPUT FIELD ───
+   Figma: Input Field component
+   Height: ~53px (label + field)
+   Field height: 48px
+   Background: #FFFFFF
+   Border: 1px #E2E5E8 (default), #2196F3 (focus)
+   Border-radius: 8px
+   Padding: 8px 16px
+   Font: Inter 14px w400, color #003366
+   Label: Inter 12px, color #6684A3
+   ─── */
+/* FIX-A: Screenshot shows label text INSIDE the field as placeholder — no separate labels above.
+   This is a filled-input pattern: gray bg, no border, large radius, text + icon inline */
+.input-group { display: flex; flex-direction: column; gap: 0; }
+.input-label { display: none; }    /* FIX-A: Hidden — label goes inside field in screenshot */
+.input-field {
+  width: 320px;
+  height: 56px;                     /* Screenshot: taller fields ~56px */
+  background: #ECEEF0;             /* Figma grey-100 #ECEEF0 — matches subtle gray in screenshot against white bg */
+  border: none;                     /* Screenshot: no visible border */
+  border-radius: var(--r-xl);     /* Screenshot: ~16px rounded */
+  padding: 0 16px;
+  font-family: var(--font);
+  font-size: 14px;                  /* Figma: Body 2 Inter 14px */
+  font-weight: 400;                /* Figma: w400 */
+  color: var(--text-primary);      /* Figma: #003366 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.input-field.focused { border-color: var(--accent); box-shadow: 0 0 8px #DAE1EA; }  /* Figma: focus shadow */
+.input-placeholder { color: var(--text-caption); }  /* Figma: #90939E */
+.input-icon { flex-shrink: 0; }
+.input-icon svg {
+  width: 20px; height: 20px;       /* Figma: icon 20px in input */
+  stroke: var(--accent);           /* Figma: #2196F3 */
+  fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ─── TOGGLE CHIPS (Meeting Place) ───
+   Based on Figma Button component:
+   Selected = Primary Filled (bg:#2196F3, text:#FFFFFF, r:40px)
+   Unselected = Primary Outlined (bg:#FFFFFF, text:#2196F3, border:1px #2196F3, r:40px)
+   ─── */
+.toggle-row { display: flex; gap: 8px; }
+.toggle-chip {
+  padding: 10px 20px;
+  border-radius: var(--r-pill);    /* Figma: r:40px (Button pill) */
+  font-family: var(--font);
+  font-size: 14px;                  /* Figma: Inter 14px */
+  font-weight: 700;                /* Figma: w700 */
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+.toggle-on {
+  background: var(--accent);       /* Figma: Primary Filled bg:#2196F3 */
+  color: var(--white);             /* Figma: text:#FFFFFF */
+}
+.toggle-off {
+  background: var(--white);        /* Figma: Outlined bg:#FFFFFF */
+  color: var(--text-primary);      /* FIX #5: Screenshot text is dark navy, not blue */
+  border: 1px solid var(--grey-200); /* FIX #5: Screenshot shows gray border (#E2E5E8), not blue */
+}
+
+/* ─── SELECTOR DROPDOWN (Customer) ───
+   Based on Input Field + custom chevron
+   ─── */
+.selector {
+  width: 320px;
+  min-height: 56px;
+  background: #ECEEF0;             /* Match input field gray — Figma grey-100 */
+  border: none;
+  border-radius: var(--r-xl);     /* r:16px matching screenshot */
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.selector-info .sel-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.selector-info .sel-sub { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 1px; }
+.selector-info .sel-placeholder { font-size: 14px; font-weight: 400; color: var(--text-caption); }
+.selector .chev svg { width: 20px; height: 20px; stroke: var(--text-secondary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ─── VIEW HISTORY LINK ─── */
+.view-hist {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 600;
+  color: var(--accent);
+  cursor: pointer; text-decoration: none;
+}
+.view-hist svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ─── PLACE LABEL ROW ─── */
+.place-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 4px 0 8px;
+  padding: 0 0 0 2px;
+}
+.place-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);    /* Screenshot shows muted navy — #6684A3 matches */
+}
+
+/* ──────────────────────────────────────
+   BOTTOM SHEET + OVERLAY
+   Figma: Dialog/Bottom Sheet component
+   bg:#FFFFFF, r:16px top corners
+   Shadow: 0 -4px 16px rgba(0,51,102,0.12)
+   ────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(45,79,126,0.55);  /* FIX-H: Faded background PNG shows muted navy, not pure #003366 */
+  z-index: 10;
+}
+.bsheet {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  border-radius: 24px 24px 0 0;    /* FIX-C: Screenshot shows rounder corners ~24px */
+  box-shadow: var(--shadow-sheet);
+  z-index: 20;
+  padding-bottom: 24px;
+  max-height: 80%;
+  overflow-y: auto;
+}
+.bsheet-handle {
+  width: 40px; height: 4px;
+  background: var(--grey-300);
+  border-radius: 2px;
+  margin: 10px auto 16px;
+}
+.bsheet-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px 16px;
+}
+.bsheet-title {
+  font-size: 18px;                  /* Figma: Heading 5 Inter 18px */
+  font-weight: 700;                /* Figma: w700 (Bold) */
+  color: var(--text-primary);
+}
+.close-btn {
+  width: 32px; height: 32px;
+  background: var(--grey-100);     /* Figma: #ECEEF0 */
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none;
+}
+.close-btn svg { width: 18px; height: 18px; stroke: var(--text-secondary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.bsheet-body { padding: 0 20px; }
+
+/* ─── SEARCH INPUT (in sheet) ───
+   Based on Input Field Search variant: white bg + 1px #E2E5E8 + r:8px
+   ─── */
+.search-bar {
+  width: 100%;
+  height: 52px;                     /* FIX #7: Slightly taller to match screenshot */
+  background: #ECEEF0;             /* Match input fields — Figma grey-100 against white sheet bg */
+  border: none;                     /* FIX #7: No border in screenshot */
+  border-radius: var(--r-xl);     /* FIX #7: ~16px radius matching screenshot */
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.search-bar svg { width: 20px; height: 20px; stroke: var(--text-caption); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.search-bar span { font-size: 14px; color: var(--text-caption); }
+
+/* ─── CUSTOMER LIST ITEM (in Select Customer sheet) ─── */
+.clist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;                  /* FIX-E: Screenshot shows more generous vertical spacing */
+  border-bottom: 1px solid var(--grey-100);
+}
+.clist-item:last-child { border-bottom: none; }
+
+/* ─── AVATAR (Figma Section 19: Avatars component) ───
+   Type: Text Profile, Low Emphasis
+   Sizes: 48, 40, 32, 24, 20 — all r:999px
+   bg colors: 100-level palette from Color Palette PNG
+   text colors: 900-level of same family
+   ─── */
+.init-avatar {
+  width: 48px; height: 48px;       /* Figma: text-48 variant */
+  border-radius: 999px;            /* Figma: r:999px (perfect circle) */
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;  /* Figma: Heading 6 (Bold 14px) */
+  flex-shrink: 0;
+}
+/* Figma Avatar colors — Low Emphasis uses 100-level bg, 900-level text */
+.av-green  { background: #D1ECCC;  color: var(--green-900); }  /* Figma: Frame 130482, green-100 */
+.av-blue   { background: #D3EAFD;  color: var(--accent); }     /* Figma: Frame 130479, blue-100 */
+.av-orange { background: #FDECDA;  color: var(--yellow-900); } /* Figma: Frame 130491, yellow-100 */
+.av-pink   { background: #F3D6D6;  color: var(--red-900); }    /* Figma: Frame 130483, red-100 */
+.av-navy   { background: #CCD6E0;  color: var(--dark-900); }   /* Figma: Frame 130484, dark-100 */
+
+.clist-info { flex: 1; }
+.clist-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.clist-id { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 1px; }
+
+/* Radio: 20×20, border:2px, selected=#2196F3 */
+.radio {
+  width: 22px; height: 22px;       /* Slightly larger for touch target */
+  border-radius: 50%;
+  border: 1.5px solid #CED1D9;    /* Screenshot: thin light gray border — Grey-400 */
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.radio.on { border: 2px solid var(--accent); }  /* Figma: selected = blue border */
+.radio.on::after {
+  content: '';
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--accent);       /* Figma: inner fill #2196F3 */
+}
+
+/* ─── TIMELINE (Meeting Place History) ─── */
+.timeline { display: flex; flex-direction: column; }
+.tl-item { display: flex; gap: 12px; }
+.tl-track {
+  display: flex; flex-direction: column; align-items: center;
+  width: 20px; flex-shrink: 0;
+  padding-top: 6px;
+}
+.tl-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--grey-300);
+  flex-shrink: 0; z-index: 1;
+}
+.tl-dot.now { background: var(--accent); }
+.tl-line { width: 2px; flex: 1; background: var(--grey-200); margin: 4px 0; }
+.tl-card {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-lg);      /* r:12px */
+  padding: 16px;                    /* FIX-D: Screenshot shows more generous card padding */
+  margin-bottom: 12px;
+}
+.tl-card.now {
+  background: var(--info-bg);      /* Figma: #E9F4FE (info highlight) */
+  border-color: var(--blue-100);   /* Figma: #D3EAFD */
+  border-left: 3px solid var(--accent);
+}
+.tl-head { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+
+/* Badge (Figma: Badge component, r:40px, padding 4px 8px, Inter 11px w600) */
+/* FIX #6 + FIX-F: Screenshot shows CURRENT as plain green text
+   Typography PNG: Caption 1 SBC = Semi Bold Caps, 12px, 140% line-height, 5% letter-spacing */
+.badge {
+  display: inline-flex;
+  font-size: 12px;                  /* Typography PNG: Caption 1 SBC = 12px */
+  font-weight: 600;                /* Typography PNG: Semi Bold */
+  letter-spacing: 0.05em;          /* Typography PNG: 5% letter-spacing */
+  text-transform: uppercase;
+}
+.badge-success {
+  background: none;                 /* FIX #6: No pill bg — plain text in screenshot */
+  color: var(--green-900);         /* Figma: text #1A9F00 */
+  border: none;                     /* FIX #6: No border — plain text */
+  padding: 0;
+}
+.tl-place { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.tl-type { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 2px; }
+.tl-date { font-size: 11px; font-weight: 400; color: var(--text-caption); margin-top: 4px; }
+
+/* ─── TOAST (Figma: Toast component, 320px, r:8px) ─── */
+.toast {
+  display: flex; align-items: center; gap: 8px;
+  width: 320px;
+  padding: 8px 20px;               /* Figma: padding 8px 20px */
+  border-radius: var(--r-md);     /* Figma: r:8px — note: some docs say r:6px */
+  font-size: 12px;                  /* Figma: Inter 12px */
+  font-weight: 600;                /* Figma: w600 */
+  color: var(--text-primary);      /* Figma: #003366 */
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 30;
+}
+.toast-ok {
+  background: var(--green-50);     /* Figma: Success #E8F5E5 */
+  border: 1px solid var(--green-500); /* Figma: border #75C666 */
+}
+.toast svg { width: 20px; height: 20px; stroke: var(--green-900); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* ─── EMPTY STATE ─── */
+.empty {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px 20px; text-align: center;
+}
+.empty svg { width: 72px; height: 72px; stroke: var(--grey-300); fill: none; stroke-width: 1; stroke-linecap: round; margin-bottom: 16px; }
+.empty-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }  /* Figma: Inter 18px w700 */
+.empty-sub { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 4px; }
+
+/* ─── SCREEN LABELS (presentation only) ─── */
+.s-label {
+  text-align: center;
+  font-family: var(--font);
+  font-size: 12px; font-weight: 600;
+  color: var(--dark-500);
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: var(--dark-50);
+  border-radius: var(--r-md);
+  max-width: 360px;
+}
+.s-tag {
+  display: inline-block;
+  text-align: center;
+  font-family: var(--font);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--accent);
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  margin-bottom: 12px;
+}
+
+/* Print */
+@media print {
+  body { background: white; gap: 24px; padding: 16px; }
+  .screen { box-shadow: 1px solid #ccc; break-inside: avoid; }
+}
 </style>
 </head>
 <body>
 
-<div class="container">
-
-<header>
-  <h1>📱 GRT Meeting Details</h1>
-  <p>Product Manager View — Complete user flows and screen specifications for Group Recognition Test module</p>
-</header>
-
-<div class="user-story">
-  <strong>User Story:</strong> As a field officer, I need to conduct Group Recognition Tests (GRT) at customer meetings to verify group members and approve loan disbursements.
-</div>
-
-<div class="flow-section">
-  <h2>Primary GRT Flow</h2>
-
-  <div class="screen-grid">
-
-    <div class="screen-card">
-      <div class="screen-number">Screen 1</div>
-      <h3 class="screen-title">GRT Main Screen</h3>
-      <p class="screen-desc">Officer views center details, meeting schedule, and GRT history. Can filter customers by status (In Progress/On-Hold).</p>
-      <img class="screen-img" src="images/GRT Default.png" alt="GRT Main" onclick="openLightbox(this.src)">
-      <ul class="features">
-        <li>Center name and next meeting date</li>
-        <li>GRT history badge shows active GRTs</li>
-        <li>Customer list with avatars and IDs</li>
-        <li>Tab filters: In Progress, On-Hold</li>
-        <li>Start GRT button (disabled until selection)</li>
-      </ul>
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 1: GRT MAIN — Enhanced with Meeting Place info
+     Figma: "In Review" S28-29 (GRT, 360×950)
+     Center Info: Frame 130475 (336×144, r:12px)
+     Meeting: Frame 130897 (328×88, r:16px)
+     History: Frame 130897 (328×56, r:16px) + Arrow Right
+     Chips: Frame 48096086 (90×31 r:100px) + Frame 48096085 (74×31 r:100px)
+     Cards: Frame 48096157 (328×88, r:16px)
+     Button: "Start GRT" (320×44)
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 1 &mdash; GRT Main (Enhanced)</div>
+  <div class="screen">
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div>
     </div>
-
-    <div class="screen-card">
-      <div class="screen-number">Screen 2</div>
-      <h3 class="screen-title">Expired GRT</h3>
-      <p class="screen-desc">Shows when a previous GRT session has expired. Officer can view history or start a new GRT.</p>
-      <img class="screen-img" src="images/Expired GRT.png" alt="Expired GRT" onclick="openLightbox(this.src)">
-      <ul class="features">
-        <li>Warning indicator for expired GRT</li>
-        <li>Time since expiration displayed</li>
-        <li>History access available</li>
-        <li>Can initiate new GRT session</li>
-      </ul>
+    <div class="header">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">GRT</span>
     </div>
+    <div class="content">
+      <div class="center-card">
+        <div class="center-row">
+          <div class="center-avatar">KN</div>
+          <div>
+            <div class="center-name">Kalyan Nagar</div>
+            <div class="center-id">ID: 000220194</div>
+          </div>
+        </div>
+      </div>
 
-    <div class="screen-card">
-      <div class="screen-number">Screen 3</div>
-      <h3 class="screen-title">GRT History</h3>
-      <p class="screen-desc">Timeline view of all previous GRT sessions with dates, locations, and outcomes.</p>
-      <img class="screen-img" src="images/GRT History.png" alt="GRT History" onclick="openLightbox(this.src)">
-      <ul class="features">
-        <li>Chronological timeline</li>
-        <li>Meeting location for each session</li>
-        <li>Attendance counts</li>
-        <li>Completion status indicators</li>
-      </ul>
+      <div class="meeting-card">
+        <div class="meeting-header">
+          <span class="meeting-label">Meeting Details</span>
+          <a class="edit-link">Edit</a>
+        </div>
+        <div class="detail-row"><span class="detail-key">Next Meeting</span><span class="detail-val">Tuesday, 4 May</span></div>
+        <div class="detail-row"><span class="detail-key">Time</span><span class="detail-val">10:00 AM</span></div>
+        <div class="detail-row"><span class="detail-key">Frequency</span><span class="detail-val">1 Month</span></div>
+        <div class="detail-divider"></div>
+        <!-- NEW: Meeting Place info -->
+        <div class="detail-row"><span class="detail-key">Meeting Place</span><span class="detail-val" style="color:var(--accent);font-weight:600">Customer's Residence</span></div>
+        <div class="detail-row"><span class="detail-key" style="font-weight:400;color:var(--text-secondary)">Host</span><span class="detail-val">Renuka Devi (FOCSM1234)</span></div>
+      </div>
+
+      <div class="history-row">
+        <span class="history-text">Meeting Place History</span>
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <div class="section-label">Customers</div>
+      <div class="chip-row">
+        <span class="chip chip-active">In Progress &bull; 5</span>
+        <span class="chip chip-inactive">On Hold &bull; 2</span>
+      </div>
+
+      <div class="cust-card">
+        <div class="cbox"></div>
+        <div class="cust-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg></div>
+        <div><div class="cust-name">Laxmi Bai</div><div class="cust-id">ID: 0008904231</div></div>
+      </div>
+      <div class="cust-card">
+        <div class="cbox"></div>
+        <div class="cust-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg></div>
+        <div><div class="cust-name">Janaki</div><div class="cust-id">ID: 0008904231</div></div>
+      </div>
+
+      <div style="margin-top:4px"><button class="btn btn-disabled">Start GRT</button></div>
     </div>
-
   </div>
+  <div class="s-label">Existing GRT + Meeting Place &amp; Host added to details card</div>
 </div>
 
-<div class="flow-section">
-  <h2>Meeting Details & Place Selection</h2>
 
-  <div class="screen-grid">
-
-    <div class="screen-card">
-      <div class="screen-number">Screen 4</div>
-      <h3 class="screen-title">Meeting Details</h3>
-      <p class="screen-desc">View and edit meeting schedule, time, and location details for the center.</p>
-      <img class="screen-img" src="images/Meeting Details.png" alt="Meeting Details" onclick="openLightbox(this.src)">
-      <ul class="features">
-        <li>Next meeting date and time</li>
-        <li>Meeting place with edit option</li>
-        <li>Meeting frequency (Weekly/Monthly)</li>
-        <li>Location tracking and history</li>
-      </ul>
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 2: EDIT MEETING — Public Place selected
+     Input Field: white bg, 1px #E2E5E8, r:8px, 48px height
+     Toggle: Button pill r:40px (Primary Filled / Primary Outlined)
+     Button: 320×44, Primary Filled
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 2 &mdash; Edit: Public Place</div>
+  <div class="screen screen-white">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div></div>
+    <div class="header">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">Meeting Details</span>
     </div>
+    <div class="content">
+      <div class="input-group">
+        <label class="input-label">Next Meeting Date</label>
+        <div class="input-field"><span>Tuesday, 4 May</span><div class="input-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div></div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Time</label>
+        <div class="input-field"><span>10:00 AM</span><div class="input-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div></div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Repayment Frequency</label>
+        <div class="input-field"><span>1 Month</span><div class="input-icon"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      </div>
 
-    <div class="screen-card">
-      <div class="screen-number">Screen 5</div>
-      <h3 class="screen-title">Add Meeting Details (Weekly)</h3>
-      <p class="screen-desc">Set up recurring weekly meetings with date, time, and location selection.</p>
-      <img class="screen-img" src="images/Add Meeting Details_Weekly.png" alt="Add Meeting Weekly" onclick="openLightbox(this.src)">
-      <ul class="features">
-        <li>Date and time pickers</li>
-        <li>Meeting place type selection</li>
-        <li>Recurring schedule (Weekly)</li>
-        <li>Location capture integration</li>
-      </ul>
+      <div class="place-row">
+        <span class="place-label">Meeting Place</span>
+        <a class="view-hist"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>View History</a>
+      </div>
+      <div class="toggle-row">
+        <button class="toggle-chip toggle-on">Public Place</button>
+        <button class="toggle-chip toggle-off">Customer's Residence</button>
+      </div>
+
+      <div class="input-group" style="margin-top:8px">
+        <label class="input-label">Place Name / Address</label>
+        <div class="input-field"><span>Town Hall, Main Road</span></div>
+      </div>
+
+      <div style="flex:1;min-height:160px"></div>
+      <button class="btn btn-primary">Save</button>
     </div>
-
-    <div class="screen-card">
-      <div class="screen-number">Screen 6</div>
-      <h3 class="screen-title">Add Meeting Details (Monthly)</h3>
-      <p class="screen-desc">Configure monthly recurring meetings with flexible scheduling options.</p>
-      <img class="screen-img" src="images/Add Meeting Details_Monthly.png" alt="Add Meeting Monthly" onclick="openLightbox(this.src)">
-      <ul class="features">
-        <li>Monthly recurrence pattern</li>
-        <li>Day of month selection</li>
-        <li>Place type: Customer's Residence or Public Place</li>
-        <li>Save and apply to schedule</li>
-      </ul>
-    </div>
-
-    <div class="screen-card">
-      <div class="screen-number">Screen 7</div>
-      <h3 class="screen-title">Edit Meeting Details</h3>
-      <p class="screen-desc">Modify existing meeting schedule and location preferences.</p>
-      <img class="screen-img" src="images/Edit meeting details.png" alt="Edit Meeting" onclick="openLightbox(this.src)">
-      <ul class="features">
-        <li>Update date and time</li>
-        <li>Change meeting place</li>
-        <li>Modify recurrence settings</li>
-        <li>Save changes with validation</li>
-      </ul>
-    </div>
-
   </div>
+  <div class="s-label">Public Place &rarr; text input for address</div>
 </div>
 
-<div class="flow-section">
-  <h2>Key Features & Components</h2>
 
-  <div class="screen-grid">
-
-    <div class="screen-card">
-      <div class="screen-number">Component</div>
-      <h3 class="screen-title">Customer Selection</h3>
-      <p class="screen-desc">Multi-select interface for choosing group members to include in GRT.</p>
-      <ul class="features">
-        <li>Checkbox selection per customer</li>
-        <li>Customer avatar, name, and ID</li>
-        <li>Filter by status tabs</li>
-        <li>Bulk selection support</li>
-      </ul>
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 3: EDIT MEETING — Customer's Residence (selected)
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 3 &mdash; Edit: Customer's Residence</div>
+  <div class="screen screen-white">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div></div>
+    <div class="header">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">Meeting Details</span>
     </div>
+    <div class="content">
+      <div class="input-group">
+        <label class="input-label">Next Meeting Date</label>
+        <div class="input-field"><span>Tuesday, 4 May</span><div class="input-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div></div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Time</label>
+        <div class="input-field"><span>10:00 AM</span><div class="input-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div></div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Repayment Frequency</label>
+        <div class="input-field"><span>1 Month</span><div class="input-icon"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      </div>
 
-    <div class="screen-card">
-      <div class="screen-number">Component</div>
-      <h3 class="screen-title">Group Photo Capture</h3>
-      <p class="screen-desc">Take mandatory group photo for GRT verification and documentation.</p>
-      <ul class="features">
-        <li>Camera interface integration</li>
-        <li>Selected customers shown</li>
-        <li>Photo preview before saving</li>
-        <li>Retake option available</li>
-      </ul>
+      <div class="place-row">
+        <span class="place-label">Meeting Place</span>
+        <a class="view-hist"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>View History</a>
+      </div>
+      <div class="toggle-row">
+        <button class="toggle-chip toggle-off">Public Place</button>
+        <button class="toggle-chip toggle-on">Customer's Residence</button>
+      </div>
+
+      <div class="input-group" style="margin-top:8px">
+        <label class="input-label">Select Customer</label>
+        <div class="selector">
+          <div class="selector-info"><div class="sel-name">Renuka Devi</div><div class="sel-sub">FOCSM1234</div></div>
+          <div class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-height:120px"></div>
+      <button class="btn btn-primary">Save</button>
     </div>
-
-    <div class="screen-card">
-      <div class="screen-number">State</div>
-      <h3 class="screen-title">Empty States</h3>
-      <p class="screen-desc">When no customers are available or no GRT history exists.</p>
-      <ul class="features">
-        <li>Friendly illustration</li>
-        <li>"None added yet!" messaging</li>
-        <li>CTA to add members</li>
-        <li>Guidance for next steps</li>
-      </ul>
-    </div>
-
   </div>
+  <div class="s-label">Customer's Residence &rarr; customer selected</div>
 </div>
 
-<div class="flow-section">
-  <h2>Business Rules</h2>
-  <div class="screen-card">
-    <ul class="features" style="padding-left: 0;">
-      <li>Minimum 3 customers required to start GRT</li>
-      <li>GRT expires after 24 hours if not completed</li>
-      <li>Group photo is mandatory for completion</li>
-      <li>Officer can pause GRT and resume later (On-Hold status)</li>
-      <li>History retained for audit and compliance</li>
-      <li>Cannot start new GRT if one is already in progress</li>
-    </ul>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 4: SAVE DISABLED — No customer chosen
+     Button: Primary Disabled (bg:#ECEEF0, text:#C5CBD1)
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 4 &mdash; Save Disabled</div>
+  <div class="screen screen-white">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div></div>
+    <div class="header">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">Meeting Details</span>
+    </div>
+    <div class="content">
+      <div class="input-group">
+        <label class="input-label">Next Meeting Date</label>
+        <div class="input-field"><span>Tuesday, 4 May</span><div class="input-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div></div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Time</label>
+        <div class="input-field"><span>10:00 AM</span><div class="input-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div></div>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Repayment Frequency</label>
+        <div class="input-field"><span>1 Month</span><div class="input-icon"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+      </div>
+
+      <div class="place-row">
+        <span class="place-label">Meeting Place</span>
+        <a class="view-hist"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>View History</a>
+      </div>
+      <div class="toggle-row">
+        <button class="toggle-chip toggle-off">Public Place</button>
+        <button class="toggle-chip toggle-on">Customer's Residence</button>
+      </div>
+
+      <div class="input-group" style="margin-top:8px">
+        <label class="input-label">Select Customer</label>
+        <div class="selector">
+          <div class="selector-info"><div class="sel-placeholder">Tap to select customer</div></div>
+          <div class="chev"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-height:120px"></div>
+      <!-- Primary Disabled: bg:#ECEEF0, text:#C5CBD1 -->
+      <button class="btn btn-disabled">Save</button>
+    </div>
   </div>
+  <div class="s-label">Customer's Residence but no customer &rarr; Save disabled</div>
 </div>
 
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 5: SELECT CUSTOMER — Bottom Sheet
+     Sheet: bg:#FFFFFF, r:16px top, shadow-sheet
+     Search: Input Field Search variant (white bg, 1px #E2E5E8, r:8px)
+     Radio: 20×20, selected border:#2196F3 + inner fill
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 5 &mdash; Select Customer</div>
+  <div class="screen screen-white">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div></div>
+    <div class="header" style="opacity:0.35">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">Meeting Details</span>
+    </div>
+    <div class="overlay" style="top:96px"></div>
+    <div class="bsheet" style="max-height:75%">
+      <div class="bsheet-handle"></div>
+      <div class="bsheet-head">
+        <span class="bsheet-title">Select Customer</span>
+        <button class="close-btn"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="bsheet-body">
+        <div class="search-bar">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <span>Search by name or ID...</span>
+        </div>
+        <div class="clist-item">
+          <div class="init-avatar av-green">RD</div>
+          <div class="clist-info"><div class="clist-name">Renuka Devi</div><div class="clist-id">FOCSM1234</div></div>
+          <div class="radio on"></div>
+        </div>
+        <div class="clist-item">
+          <div class="init-avatar av-green">PK</div>
+          <div class="clist-info"><div class="clist-name">Priya Kumari</div><div class="clist-id">FOCSM5678</div></div>
+          <div class="radio"></div>
+        </div>
+        <div class="clist-item">
+          <div class="init-avatar av-orange">LB</div>
+          <div class="clist-info"><div class="clist-name">Lakshmi Bai</div><div class="clist-id">FOCSM9012</div></div>
+          <div class="radio"></div>
+        </div>
+        <div class="clist-item">
+          <div class="init-avatar av-pink">SD</div>
+          <div class="clist-info"><div class="clist-name">Saraswati Devi</div><div class="clist-id">FOCSM3456</div></div>
+          <div class="radio"></div>
+        </div>
+        <div class="clist-item">
+          <div class="init-avatar av-blue">MK</div>
+          <div class="clist-info"><div class="clist-name">Meena Kumari</div><div class="clist-id">FOCSM7890</div></div>
+          <div class="radio"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s-label">Bottom sheet with search + radio selection</div>
 </div>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <span class="close-btn">×</span>
-  <img id="lightbox-img" src="" alt="">
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 6: MEETING PLACE HISTORY — Timeline
+     Timeline cards: r:12px, current card bg:#E9F4FE border:#D3EAFD
+     Badge: Success badge (bg:#E8F5E5, text:#1A9F00, border:#D1ECCC, r:40px)
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 6 &mdash; Place History</div>
+  <div class="screen screen-white">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div></div>
+    <div class="header" style="opacity:0.35">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">Meeting Details</span>
+    </div>
+    <div class="overlay" style="top:96px"></div>
+    <div class="bsheet" style="max-height:78%">
+      <div class="bsheet-handle"></div>
+      <div class="bsheet-head">
+        <span class="bsheet-title">Meeting Place History</span>
+        <button class="close-btn"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="bsheet-body">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-track"><div class="tl-dot now"></div><div class="tl-line"></div></div>
+            <div class="tl-card now">
+              <div class="tl-head"><span class="badge badge-success">Current</span></div>
+              <div class="tl-place">Renuka Devi (FOCSM1234)</div>
+              <div class="tl-type">Customer's Residence</div>
+              <div class="tl-date">22/10/2025 10:45 AM</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-track"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-card">
+              <div class="tl-place">Town Hall, Main Road</div>
+              <div class="tl-type">Public Place</div>
+              <div class="tl-date">15/10/2025 09:30 AM</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-track"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-card">
+              <div class="tl-place">Priya Kumari (FOCSM5678)</div>
+              <div class="tl-type">Customer's Residence</div>
+              <div class="tl-date">01/10/2025 11:00 AM</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-track"><div class="tl-dot"></div></div>
+            <div class="tl-card">
+              <div class="tl-place">Community Center</div>
+              <div class="tl-type">Public Place</div>
+              <div class="tl-date">20/09/2025 03:15 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s-label">Timeline: CURRENT badge uses Success Badge (r:40px)</div>
 </div>
 
-<script>
-function openLightbox(src) {
-  document.getElementById('lightbox').classList.add('active');
-  document.getElementById('lightbox-img').src = src;
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('active');
-}
-</script>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 7: EMPTY HISTORY — First meeting
+     Empty state: illustration + "No meeting history yet" (Inter 18px w700)
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 7 &mdash; Empty History</div>
+  <div class="screen screen-white">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div></div>
+    <div class="header" style="opacity:0.35">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">Meeting Details</span>
+    </div>
+    <div class="overlay" style="top:96px"></div>
+    <div class="bsheet" style="max-height:50%">
+      <div class="bsheet-handle"></div>
+      <div class="bsheet-head">
+        <span class="bsheet-title">Meeting Place History</span>
+        <button class="close-btn"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="bsheet-body">
+        <div class="empty">
+          <svg viewBox="0 0 72 72">
+            <circle cx="36" cy="36" r="28" stroke-dasharray="5 5"/>
+            <circle cx="36" cy="28" r="8"/>
+            <path d="M36 40v4"/>
+            <path d="M22 56c0-8 6-14 14-14s14 6 14 14"/>
+            <path d="M52 20l-4 4M20 20l4 4"/>
+          </svg>
+          <div class="empty-title">No meeting history yet</div>
+          <div class="empty-sub">History will appear after the first meeting is saved</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s-label">Empty state for first-time centers</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SCREEN 8: SUCCESS — Returns to GRT with Toast
+     Toast: 320px, bg:#E8F5E5, border:#75C666, r:8px
+     ═══════════════════════════════════════════════════════ -->
+<div>
+  <div class="s-tag">Screen 8 &mdash; Save Success</div>
+  <div class="screen">
+    <div class="status-bar"><span class="time">9:41</span><div class="icons"><svg width="17" height="11" viewBox="0 0 17 11"><rect x="0" y="4" width="3" height="7" rx="0.5"/><rect x="4.5" y="2.5" width="3" height="8.5" rx="0.5"/><rect x="9" y="1" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="11" rx="0.5"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 4.5C3.5 1.5 7 0 8 0s4.5 1.5 7 4.5M3.5 7c1.5-2 3-3 4.5-3s3 1 4.5 3M6 9.5c.8-1 1.5-1.5 2-1.5s1.2.5 2 1.5" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg><svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="0" width="22" height="12" rx="2.5" stroke-width="1" fill="none"/><rect x="1.5" y="1.5" width="17" height="9" rx="1.5"/><rect x="23" y="3.5" width="2" height="5" rx="1"/></svg></div></div>
+    <div class="header">
+      <button class="back-btn"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="header-title">GRT</span>
+    </div>
+    <div class="content">
+      <div class="center-card">
+        <div class="center-row">
+          <div class="center-avatar">KN</div>
+          <div><div class="center-name">Kalyan Nagar</div><div class="center-id">ID: 000220194</div></div>
+        </div>
+      </div>
+
+      <div class="meeting-card">
+        <div class="meeting-header"><span class="meeting-label">Meeting Details</span><a class="edit-link">Edit</a></div>
+        <div class="detail-row"><span class="detail-key">Next Meeting</span><span class="detail-val">Tuesday, 4 May</span></div>
+        <div class="detail-row"><span class="detail-key">Time</span><span class="detail-val">10:00 AM</span></div>
+        <div class="detail-row"><span class="detail-key">Frequency</span><span class="detail-val">1 Month</span></div>
+        <div class="detail-divider"></div>
+        <div class="detail-row"><span class="detail-key">Meeting Place</span><span class="detail-val" style="color:var(--accent);font-weight:600">Customer's Residence</span></div>
+        <div class="detail-row"><span class="detail-key" style="font-weight:400;color:var(--text-secondary)">Host</span><span class="detail-val">Renuka Devi (FOCSM1234)</span></div>
+      </div>
+
+      <div class="history-row">
+        <span class="history-text">Meeting Place History</span>
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <div class="section-label">Customers</div>
+      <div class="chip-row">
+        <span class="chip chip-active">In Progress &bull; 5</span>
+        <span class="chip chip-inactive">On Hold &bull; 2</span>
+      </div>
+
+      <div class="cust-card">
+        <div class="cbox"></div>
+        <div class="cust-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg></div>
+        <div><div class="cust-name">Laxmi Bai</div><div class="cust-id">ID: 0008904231</div></div>
+      </div>
+
+      <div style="margin-top:4px"><button class="btn btn-disabled">Start GRT</button></div>
+    </div>
+
+    <div class="toast toast-ok">
+      <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+      Meeting details updated successfully
+    </div>
+  </div>
+  <div class="s-label">Success toast after save &rarr; back to GRT main</div>
+</div>
+
 
 </body>
 </html>
