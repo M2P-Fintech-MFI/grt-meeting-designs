@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRT Meeting Details — Developer Handoff</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font: 'Inter', sans-serif;
+  --mono: 'Roboto Mono', monospace;
+  --bg: #F8F9FB;
+  --card: #FFFFFF;
+  --text: #1B242C;
+  --muted: #6B7280;
+  --accent: #2196F3;
+  --border: #E5E7EB;
+  --code-bg: #F1F5F9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.5; }
+
+/* Layout */
+.container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+.subtitle { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+h2 { font-size: 20px; font-weight: 700; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 16px; font-weight: 700; margin: 24px 0 12px; color: var(--accent); }
+h4 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 16px 0 8px; }
+
+/* Cards */
+.spec-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.spec-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.spec-row > * { flex: 1; min-width: 280px; }
+
+/* Token table */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+th { text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding: 8px 12px; border-bottom: 2px solid var(--border); }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+
+/* Color swatch */
+.swatch { display: inline-block; width: 20px; height: 20px; border-radius: 4px; vertical-align: middle; margin-right: 8px; border: 1px solid rgba(0,0,0,0.08); }
+
+/* Code block */
+.code-block {
+  background: #1E293B; color: #E2E8F0; border-radius: 8px;
+  padding: 16px 20px; font-family: var(--mono); font-size: 12px;
+  line-height: 1.7; overflow-x: auto; position: relative; margin: 8px 0 16px;
+  white-space: pre;
+}
+.code-block .comment { color: #64748B; }
+.code-block .prop { color: #7DD3FC; }
+.code-block .val { color: #FDE68A; }
+.code-block .sel { color: #A78BFA; }
+.copy-btn {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: #94A3B8; border-radius: 6px; padding: 4px 10px; font-size: 11px;
+  cursor: pointer; font-family: var(--font);
+}
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: #E2E8F0; }
+
+/* Component preview */
+.preview { background: #F5F6F7; border-radius: 8px; padding: 24px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin: 8px 0; }
+.preview-white { background: #FFFFFF; border: 1px solid var(--border); }
+
+/* Badge */
+.badge { display: inline-flex; padding: 4px 8px; border-radius: 40px; font-size: 11px; font-weight: 600; }
+.tag { display: inline-flex; padding: 2px 8px; border-radius: 40px; font-size: 10px; font-weight: 700; background: #E8F5E5; color: #1A9F00; border: 1px solid #D1ECCC; margin-left: 8px; }
+
+/* Inline code */
+code { font-family: var(--mono); font-size: 12px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; color: #0F172A; }
+
+/* Nav */
+.nav { position: sticky; top: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 24px; z-index: 100; display: flex; gap: 24px; flex-wrap: wrap; }
+.nav a { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; }
+.nav a:hover { color: var(--accent); }
+
+/* Responsive */
+@media print { .nav, .copy-btn { display: none; } body { background: white; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#tokens">Design Tokens</a>
+  <a href="#typography">Typography</a>
+  <a href="#colors">Colors</a>
+  <a href="#avatars">Avatars</a>
+  <a href="#inputs">Inputs</a>
+  <a href="#buttons">Buttons</a>
+  <a href="#radio">Radio/Checkbox</a>
+  <a href="#chips">Chips &amp; Toggle</a>
+  <a href="#cards">Cards</a>
+  <a href="#sheets">Bottom Sheet</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#toast">Toast</a>
+  <a href="#screens">Screen Specs</a>
+</nav>
+
+<div class="container">
+
+<h1>GRT Meeting Details — Developer Handoff</h1>
+<p class="subtitle">Figma source: <code>ynrZ50gvTh5yb20gwciKcI</code> &bull; Design system: Loanbook Field Staff &bull; Sally reviewed: 2026-02-14T00:45:00Z</p>
+
+<!-- ============================== TOKENS ============================== -->
+<h2 id="tokens">CSS Custom Properties (Design Tokens)</h2>
+<p>Copy this entire block into your app's root stylesheet. Every value traces to the Figma Color Palette (node 525:4790).</p>
+
+<div class="code-block" id="tokens-code"><button class="copy-btn" onclick="copyCode('tokens-code')">Copy</button><span class="comment">/* Loanbook Field Staff Design Tokens — from Figma Components */</span>
+<span class="sel">:root</span> {
+  <span class="comment">/* Blues */</span>
+  <span class="prop">--blue-900</span>: <span class="val">#2196F3</span>;   <span class="comment">/* Primary CTA, active elements */</span>
+  <span class="prop">--blue-800</span>: <span class="val">#37A0F4</span>;
+  <span class="prop">--blue-600</span>: <span class="val">#64B0F7</span>;   <span class="comment">/* Hover state */</span>
+  <span class="prop">--blue-400</span>: <span class="val">#90CAF9</span>;
+  <span class="prop">--blue-100</span>: <span class="val">#D3EAFD</span>;   <span class="comment">/* Avatar bg, info border */</span>
+  <span class="prop">--blue-50</span>:  <span class="val">#E9F4FE</span>;   <span class="comment">/* Info highlight bg */</span>
+
+  <span class="comment">/* Dark Blues */</span>
+  <span class="prop">--dark-900</span>: <span class="val">#003366</span>;   <span class="comment">/* Primary text, header bg */</span>
+  <span class="prop">--dark-500</span>: <span class="val">#6684A3</span>;   <span class="comment">/* Secondary text, labels */</span>
+  <span class="prop">--dark-100</span>: <span class="val">#CCD6E0</span>;   <span class="comment">/* Chip active bg, avatar bg (navy) */</span>
+
+  <span class="comment">/* Greys */</span>
+  <span class="prop">--grey-500</span>: <span class="val">#C5CBD1</span>;   <span class="comment">/* Disabled text */</span>
+  <span class="prop">--grey-400</span>: <span class="val">#CED1D9</span>;   <span class="comment">/* Radio unselected border */</span>
+  <span class="prop">--grey-300</span>: <span class="val">#D8DCE0</span>;   <span class="comment">/* Disabled CTA bg */</span>
+  <span class="prop">--grey-200</span>: <span class="val">#E2E5E8</span>;   <span class="comment">/* Input border, toggle border */</span>
+  <span class="prop">--grey-100</span>: <span class="val">#ECEEF0</span>;   <span class="comment">/* Filled input bg, disabled btn bg */</span>
+  <span class="prop">--grey-50</span>:  <span class="val">#F5F6F7</span>;   <span class="comment">/* Page background (GRT main) */</span>
+
+  <span class="comment">/* Greens */</span>
+  <span class="prop">--green-900</span>: <span class="val">#1A9F00</span>;  <span class="comment">/* Success text, avatar text */</span>
+  <span class="prop">--green-500</span>: <span class="val">#75C666</span>;  <span class="comment">/* Toast border */</span>
+  <span class="prop">--green-100</span>: <span class="val">#D1ECCC</span>;  <span class="comment">/* Avatar bg (green) */</span>
+  <span class="prop">--green-50</span>:  <span class="val">#E8F5E5</span>;  <span class="comment">/* Toast bg */</span>
+
+  <span class="comment">/* Reds */</span>
+  <span class="prop">--red-900</span>: <span class="val">#C53434</span>;   <span class="comment">/* Error, destructive, avatar text */</span>
+  <span class="prop">--red-100</span>: <span class="val">#F3D6D6</span>;   <span class="comment">/* Avatar bg (red) */</span>
+
+  <span class="comment">/* Yellows */</span>
+  <span class="prop">--yellow-900</span>: <span class="val">#F4A246</span>; <span class="comment">/* Warning, avatar text */</span>
+  <span class="prop">--yellow-100</span>: <span class="val">#FDECDA</span>; <span class="comment">/* Avatar bg (yellow) */</span>
+
+  <span class="comment">/* Shadows */</span>
+  <span class="prop">--shadow-raised</span>:  <span class="val">0 2px 8px rgba(27,36,44,0.08)</span>;
+  <span class="prop">--shadow-dialog</span>:  <span class="val">0 4px 24px rgba(0,0,0,0.16)</span>;
+  <span class="prop">--shadow-sheet</span>:   <span class="val">0 -4px 16px rgba(0,51,102,0.12)</span>;
+  <span class="prop">--shadow-bottom</span>:  <span class="val">0 -2px 16px rgba(90,90,90,0.08)</span>;
+
+  <span class="comment">/* Border Radii */</span>
+  <span class="prop">--r-xs</span>:   <span class="val">4px</span>;    <span class="comment">/* checkbox */</span>
+  <span class="prop">--r-md</span>:   <span class="val">8px</span>;    <span class="comment">/* standard input, toast */</span>
+  <span class="prop">--r-lg</span>:   <span class="val">12px</span>;   <span class="comment">/* cards, CTAs */</span>
+  <span class="prop">--r-xl</span>:   <span class="val">16px</span>;   <span class="comment">/* filled input, customer cards */</span>
+  <span class="prop">--r-pill</span>: <span class="val">40px</span>;   <span class="comment">/* buttons, chips, badges */</span>
+  <span class="prop">--r-full</span>: <span class="val">100px</span>;  <span class="comment">/* filter chips */</span>
+}</div>
+
+<!-- ============================== TYPOGRAPHY ============================== -->
+<h2 id="typography">Typography Scale</h2>
+<p>Font: <strong>Inter</strong> (Google Fonts). Status bar only: <strong>Roboto</strong>. From Typography PNG (Figma Components page).</p>
+
+<div class="spec-card">
+<table>
+<tr><th>Style</th><th>Weight</th><th>Size</th><th>Line Height</th><th>Letter Spacing</th><th>CSS</th></tr>
+<tr><td>Heading 3</td><td>Bold (700)</td><td>24px</td><td>140%</td><td>0</td><td><code>font: 700 24px/1.4 Inter</code></td></tr>
+<tr><td>Heading 4</td><td>Bold (700)</td><td>20px</td><td>140%</td><td>0</td><td><code>font: 700 20px/1.4 Inter</code></td></tr>
+<tr><td><strong>Heading 5</strong></td><td>Bold (700)</td><td>18px</td><td>140%</td><td>0</td><td><code>font: 700 18px/1.4 Inter</code></td></tr>
+<tr><td><strong>Heading 6</strong></td><td>Bold (700)</td><td>14px</td><td>140%</td><td>0</td><td><code>font: 700 14px/1.4 Inter</code></td></tr>
+<tr><td><strong>Sub Heading 1</strong></td><td>Semi Bold (600)</td><td>16px</td><td>140%</td><td>0</td><td><code>font: 600 16px/1.4 Inter</code></td></tr>
+<tr><td><strong>Sub Heading 2</strong></td><td>Semi Bold (600)</td><td>14px</td><td>140%</td><td>0</td><td><code>font: 600 14px/1.4 Inter</code></td></tr>
+<tr><td>Body 1</td><td>Regular (400)</td><td>16px</td><td>140%</td><td>0</td><td><code>font: 400 16px/1.4 Inter</code></td></tr>
+<tr><td><strong>Body 2</strong></td><td>Regular (400)</td><td>14px</td><td>140%</td><td>0</td><td><code>font: 400 14px/1.4 Inter</code></td></tr>
+<tr><td><strong>Caption 1 SBC</strong></td><td>Semi Bold (600)</td><td>12px</td><td>140%</td><td>5%</td><td><code>font: 600 12px/1.4 Inter; letter-spacing: 0.05em; text-transform: uppercase</code></td></tr>
+<tr><td><strong>Caption 1 SB</strong></td><td>Semi Bold (600)</td><td>12px</td><td>140%</td><td>0</td><td><code>font: 600 12px/1.4 Inter</code></td></tr>
+<tr><td><strong>Caption 1 R</strong></td><td>Regular (400)</td><td>12px</td><td>140%</td><td>0</td><td><code>font: 400 12px/1.4 Inter</code></td></tr>
+<tr><td>Footer SB</td><td>Semi Bold (600)</td><td>11px</td><td>140%</td><td>2%</td><td><code>font: 600 11px/1.4 Inter; letter-spacing: 0.02em</code></td></tr>
+<tr><td>Footer R</td><td>Regular (400)</td><td>11px</td><td>140%</td><td>2%</td><td><code>font: 400 11px/1.4 Inter; letter-spacing: 0.02em</code></td></tr>
+</table>
+<p style="font-size:12px;color:var(--muted)">Bold = used in this feature. Status bar: <code>font: 500 14.4px Roboto</code></p>
+</div>
+
+<h4>Usage in Meeting Details screens</h4>
+<div class="spec-card">
+<table>
+<tr><th>Element</th><th>Style</th><th>Color</th></tr>
+<tr><td>Header title ("Meeting Details", "GRT")</td><td>Sub Heading 1 — 600 16px</td><td><code>#003366</code></td></tr>
+<tr><td>Sheet title ("Select Customer", "Meeting Place History")</td><td>Heading 5 — 700 18px</td><td><code>#003366</code></td></tr>
+<tr><td>Section label ("Customers", "Meeting Details")</td><td>Sub Heading 2 — 600 14px</td><td><code>#003366</code></td></tr>
+<tr><td>Detail key ("Next Meeting", "Time")</td><td>Sub Heading 2 — 600 14px</td><td><code>#003366</code></td></tr>
+<tr><td>Detail value ("Tuesday, 4 May")</td><td>Body 2 — 400 14px</td><td><code>#003366</code></td></tr>
+<tr><td>Input text / placeholder</td><td>Body 2 — 400 14px</td><td><code>#003366</code> / <code>#90939E</code></td></tr>
+<tr><td>Customer name</td><td>Sub Heading 2 — 600 14px</td><td><code>#003366</code></td></tr>
+<tr><td>Customer ID ("FOCSM1234")</td><td>Caption 1 R — 400 12px</td><td><code>#6684A3</code></td></tr>
+<tr><td>Avatar initials ("RD", "PK")</td><td>Heading 6 — 700 14px</td><td>Per avatar color</td></tr>
+<tr><td>"CURRENT" label</td><td>Caption 1 SBC — 600 12px, 5% spacing, uppercase</td><td><code>#1A9F00</code></td></tr>
+<tr><td>Place type ("Customer's Residence")</td><td>Caption 1 R — 400 12px</td><td><code>#6684A3</code></td></tr>
+<tr><td>Date/time ("22/10/2025 10:45 AM")</td><td>Footer R — 400 11px</td><td><code>#90939E</code></td></tr>
+<tr><td>"Edit" link, "View History" link</td><td>Sub Heading 2 — 600 14px / Caption 1 SB — 600 12px</td><td><code>#2196F3</code></td></tr>
+<tr><td>Button text ("Save", "Start GRT")</td><td>Heading 6 — 700 14px</td><td>White or <code>#C5CBD1</code></td></tr>
+<tr><td>Toast text</td><td>Caption 1 SB — 600 12px</td><td><code>#003366</code></td></tr>
+</table>
+</div>
+
+<!-- ============================== COLORS ============================== -->
+<h2 id="colors">Color Palette</h2>
+
+<div class="spec-card">
+<h4>Core Usage Colors</h4>
+<table>
+<tr><th>Swatch</th><th>Hex</th><th>Token</th><th>Usage</th></tr>
+<tr><td><span class="swatch" style="background:#003366"></span></td><td><code>#003366</code></td><td>dark-900</td><td>Primary text, dark header bg</td></tr>
+<tr><td><span class="swatch" style="background:#2196F3"></span></td><td><code>#2196F3</code></td><td>blue-900</td><td>Primary CTA, active states, links</td></tr>
+<tr><td><span class="swatch" style="background:#6684A3"></span></td><td><code>#6684A3</code></td><td>dark-500</td><td>Secondary text, input labels</td></tr>
+<tr><td><span class="swatch" style="background:#ECEEF0"></span></td><td><code>#ECEEF0</code></td><td>grey-100</td><td>Filled input bg, disabled button bg</td></tr>
+<tr><td><span class="swatch" style="background:#E2E5E8"></span></td><td><code>#E2E5E8</code></td><td>grey-200</td><td>Input border (standard), toggle border</td></tr>
+<tr><td><span class="swatch" style="background:#F5F6F7"></span></td><td><code>#F5F6F7</code></td><td>grey-50</td><td>Page bg (GRT main screen)</td></tr>
+<tr><td><span class="swatch" style="background:#FFFFFF;border:1px solid #ddd"></span></td><td><code>#FFFFFF</code></td><td>white</td><td>Page bg (edit screens), card bg, sheet bg</td></tr>
+<tr><td><span class="swatch" style="background:#1A9F00"></span></td><td><code>#1A9F00</code></td><td>green-900</td><td>Success, "CURRENT" label</td></tr>
+<tr><td><span class="swatch" style="background:#E8F5E5"></span></td><td><code>#E8F5E5</code></td><td>green-50</td><td>Toast success bg</td></tr>
+<tr><td><span class="swatch" style="background:#E9F4FE"></span></td><td><code>#E9F4FE</code></td><td>blue-50</td><td>Current timeline card bg</td></tr>
+<tr><td><span class="swatch" style="background:#C5CBD1"></span></td><td><code>#C5CBD1</code></td><td>grey-500</td><td>Disabled button text</td></tr>
+<tr><td><span class="swatch" style="background:#CED1D9"></span></td><td><code>#CED1D9</code></td><td>grey-400</td><td>Radio unselected border</td></tr>
+</table>
+</div>
+
+<!-- ============================== AVATARS ============================== -->
+<h2 id="avatars">Avatar Component</h2>
+<p>Figma: Section 19 (Avatars). Text Profile — Low Emphasis variant. Circle <code>r:999px</code>.</p>
+
+<div class="spec-card">
+<h4>Sizes</h4>
+<table>
+<tr><th>Name</th><th>Size</th><th>Usage</th></tr>
+<tr><td>text-48</td><td><strong>48×48px</strong></td><td>Customer selection lists, GRT attendance</td></tr>
+<tr><td>text-40</td><td>40×40px</td><td>Compact member cards</td></tr>
+<tr><td>text-32</td><td>32×32px</td><td>Inline references</td></tr>
+<tr><td>text-24</td><td>24×24px</td><td>Card headers, breadcrumbs</td></tr>
+<tr><td>text-20</td><td>20×20px</td><td>Badges, minimal context</td></tr>
+</table>
+
+<h4>Low Emphasis Colors (100-level bg, 900-level text)</h4>
+<div class="preview preview-white">
+  <div style="width:48px;height:48px;border-radius:999px;background:#D1ECCC;display:flex;align-items:center;justify-content:center;font:700 14px Inter;color:#1A9F00">RD</div>
+  <div style="width:48px;height:48px;border-radius:999px;background:#D3EAFD;display:flex;align-items:center;justify-content:center;font:700 14px Inter;color:#2196F3">MK</div>
+  <div style="width:48px;height:48px;border-radius:999px;background:#FDECDA;display:flex;align-items:center;justify-content:center;font:700 14px Inter;color:#F4A246">LB</div>
+  <div style="width:48px;height:48px;border-radius:999px;background:#F3D6D6;display:flex;align-items:center;justify-content:center;font:700 14px Inter;color:#C53434">SD</div>
+  <div style="width:48px;height:48px;border-radius:999px;background:#CCD6E0;display:flex;align-items:center;justify-content:center;font:700 14px Inter;color:#003366">AB</div>
+</div>
+
+<table>
+<tr><th>Color</th><th>Background</th><th>Text</th><th>Figma Frame</th></tr>
+<tr><td><span class="swatch" style="background:#D1ECCC"></span>Green</td><td><code>#D1ECCC</code> (green-100)</td><td><code>#1A9F00</code> (green-900)</td><td>Frame 130482</td></tr>
+<tr><td><span class="swatch" style="background:#D3EAFD"></span>Blue</td><td><code>#D3EAFD</code> (blue-100)</td><td><code>#2196F3</code> (blue-900)</td><td>Frame 130479</td></tr>
+<tr><td><span class="swatch" style="background:#FDECDA"></span>Yellow</td><td><code>#FDECDA</code> (yellow-100)</td><td><code>#F4A246</code> (yellow-900)</td><td>Frame 130491</td></tr>
+<tr><td><span class="swatch" style="background:#F3D6D6"></span>Red</td><td><code>#F3D6D6</code> (red-100)</td><td><code>#C53434</code> (red-900)</td><td>Frame 130483</td></tr>
+<tr><td><span class="swatch" style="background:#CCD6E0"></span>Navy</td><td><code>#CCD6E0</code> (dark-100)</td><td><code>#003366</code> (dark-900)</td><td>Frame 130484</td></tr>
+</table>
+</div>
+
+<div class="code-block" id="avatar-code"><button class="copy-btn" onclick="copyCode('avatar-code')">Copy CSS</button><span class="sel">.avatar</span> {
+  <span class="prop">width</span>: <span class="val">48px</span>;
+  <span class="prop">height</span>: <span class="val">48px</span>;
+  <span class="prop">border-radius</span>: <span class="val">999px</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;
+  <span class="prop">font</span>: <span class="val">700 14px/1 'Inter', sans-serif</span>;
+}
+<span class="sel">.avatar--green</span>  { <span class="prop">background</span>: <span class="val">#D1ECCC</span>; <span class="prop">color</span>: <span class="val">#1A9F00</span>; }
+<span class="sel">.avatar--blue</span>   { <span class="prop">background</span>: <span class="val">#D3EAFD</span>; <span class="prop">color</span>: <span class="val">#2196F3</span>; }
+<span class="sel">.avatar--yellow</span> { <span class="prop">background</span>: <span class="val">#FDECDA</span>; <span class="prop">color</span>: <span class="val">#F4A246</span>; }
+<span class="sel">.avatar--red</span>    { <span class="prop">background</span>: <span class="val">#F3D6D6</span>; <span class="prop">color</span>: <span class="val">#C53434</span>; }
+<span class="sel">.avatar--navy</span>   { <span class="prop">background</span>: <span class="val">#CCD6E0</span>; <span class="prop">color</span>: <span class="val">#003366</span>; }</div>
+
+<!-- ============================== INPUTS ============================== -->
+<h2 id="inputs">Input Field (Filled Variant)</h2>
+<p>This feature uses a <strong>filled input</strong> pattern (not the standard white+border from the component library). Used on white page bg.</p>
+
+<div class="preview preview-white">
+  <div style="width:320px;height:56px;background:#ECEEF0;border:none;border-radius:16px;padding:0 16px;font:400 14px Inter;color:#003366;display:flex;align-items:center;justify-content:space-between">
+    <span>Next Meeting Date</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2196F3" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+  </div>
+</div>
+
+<div class="code-block" id="input-code"><button class="copy-btn" onclick="copyCode('input-code')">Copy CSS</button><span class="sel">.input-filled</span> {
+  <span class="prop">width</span>: <span class="val">320px</span>;
+  <span class="prop">height</span>: <span class="val">56px</span>;
+  <span class="prop">background</span>: <span class="val">#ECEEF0</span>;          <span class="comment">/* grey-100 */</span>
+  <span class="prop">border</span>: <span class="val">none</span>;
+  <span class="prop">border-radius</span>: <span class="val">16px</span>;          <span class="comment">/* --r-xl */</span>
+  <span class="prop">padding</span>: <span class="val">0 16px</span>;
+  <span class="prop">font</span>: <span class="val">400 14px/1.4 'Inter'</span>;   <span class="comment">/* Body 2 */</span>
+  <span class="prop">color</span>: <span class="val">#003366</span>;               <span class="comment">/* dark-900 */</span>
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">justify-content</span>: <span class="val">space-between</span>;
+}
+<span class="sel">.input-filled__placeholder</span> {
+  <span class="prop">color</span>: <span class="val">#90939E</span>;
+}
+<span class="sel">.input-filled__icon</span> {
+  <span class="prop">color</span>: <span class="val">#2196F3</span>;              <span class="comment">/* blue-900 */</span>
+  <span class="prop">width</span>: <span class="val">20px</span>; <span class="prop">height</span>: <span class="val">20px</span>;
+}</div>
+
+<!-- ============================== BUTTONS ============================== -->
+<h2 id="buttons">Buttons</h2>
+
+<div class="preview preview-white">
+  <button style="width:160px;height:44px;border-radius:40px;background:#2196F3;color:white;border:none;font:700 14px Inter;cursor:pointer">Save</button>
+  <button style="width:160px;height:44px;border-radius:40px;background:#ECEEF0;color:#C5CBD1;border:none;font:700 14px Inter;cursor:default">Save</button>
+  <button style="width:180px;height:44px;border-radius:40px;background:white;color:#2196F3;border:1px solid #2196F3;font:700 14px Inter;cursor:pointer">Add Customer</button>
+</div>
+
+<div class="code-block" id="btn-code"><button class="copy-btn" onclick="copyCode('btn-code')">Copy CSS</button><span class="sel">.btn</span> {
+  <span class="prop">height</span>: <span class="val">44px</span>;
+  <span class="prop">border-radius</span>: <span class="val">40px</span>;          <span class="comment">/* pill */</span>
+  <span class="prop">font</span>: <span class="val">700 14px/1 'Inter'</span>;
+  <span class="prop">padding</span>: <span class="val">12px 16px</span>;
+  <span class="prop">border</span>: <span class="val">none</span>;
+  <span class="prop">cursor</span>: <span class="val">pointer</span>;
+}
+<span class="sel">.btn--primary</span>  { <span class="prop">background</span>: <span class="val">#2196F3</span>; <span class="prop">color</span>: <span class="val">#FFFFFF</span>; }
+<span class="sel">.btn--hover</span>    { <span class="prop">background</span>: <span class="val">#64B0F7</span>; }
+<span class="sel">.btn--disabled</span> { <span class="prop">background</span>: <span class="val">#ECEEF0</span>; <span class="prop">color</span>: <span class="val">#C5CBD1</span>; <span class="prop">cursor</span>: <span class="val">not-allowed</span>; }
+<span class="sel">.btn--outlined</span> { <span class="prop">background</span>: <span class="val">#FFFFFF</span>; <span class="prop">color</span>: <span class="val">#2196F3</span>; <span class="prop">border</span>: <span class="val">1px solid #2196F3</span>; }
+<span class="sel">.btn--danger</span>   { <span class="prop">background</span>: <span class="val">#C53434</span>; <span class="prop">color</span>: <span class="val">#FFFFFF</span>; }</div>
+
+<!-- ============================== RADIO ============================== -->
+<h2 id="radio">Radio Button &amp; Checkbox</h2>
+
+<div class="spec-card">
+<div class="spec-row">
+<div>
+<h4>Radio Button</h4>
+<div class="preview preview-white" style="gap:24px">
+  <div style="width:22px;height:22px;border-radius:50%;border:1.5px solid #CED1D9"></div>
+  <div style="width:22px;height:22px;border-radius:50%;border:2px solid #2196F3;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:11px;border-radius:50%;background:#2196F3"></div></div>
+</div>
+<table>
+<tr><th>State</th><th>Border</th><th>Fill</th></tr>
+<tr><td>Unselected</td><td><code>1.5px solid #CED1D9</code></td><td>none</td></tr>
+<tr><td>Selected</td><td><code>2px solid #2196F3</code></td><td><code>#2196F3</code> (11px dot)</td></tr>
+</table>
+</div>
+<div>
+<h4>Checkbox</h4>
+<div class="preview preview-white" style="gap:24px">
+  <div style="width:20px;height:20px;border-radius:4px;border:2px solid #2196F3"></div>
+  <div style="width:20px;height:20px;border-radius:4px;background:#2196F3;border:2px solid #2196F3;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+</div>
+<table>
+<tr><th>State</th><th>Border</th><th>Fill</th></tr>
+<tr><td>Unchecked</td><td><code>2px solid #2196F3</code></td><td>none</td></tr>
+<tr><td>Checked</td><td><code>2px solid #2196F3</code></td><td><code>#2196F3</code> + white checkmark</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ============================== CHIPS ============================== -->
+<h2 id="chips">Toggle Chips (Meeting Place)</h2>
+
+<div class="preview preview-white">
+  <button style="padding:10px 20px;border-radius:40px;background:#2196F3;color:white;border:none;font:700 14px Inter">Customer's Residence</button>
+  <button style="padding:10px 20px;border-radius:40px;background:white;color:#003366;border:1px solid #E2E5E8;font:700 14px Inter">Public Place</button>
+</div>
+
+<div class="code-block" id="toggle-code"><button class="copy-btn" onclick="copyCode('toggle-code')">Copy CSS</button><span class="sel">.toggle-chip</span> {
+  <span class="prop">padding</span>: <span class="val">10px 20px</span>;
+  <span class="prop">border-radius</span>: <span class="val">40px</span>;
+  <span class="prop">font</span>: <span class="val">700 14px/1 'Inter'</span>;
+  <span class="prop">cursor</span>: <span class="val">pointer</span>;
+}
+<span class="sel">.toggle-chip--on</span> {
+  <span class="prop">background</span>: <span class="val">#2196F3</span>; <span class="prop">color</span>: <span class="val">#FFFFFF</span>; <span class="prop">border</span>: <span class="val">none</span>;
+}
+<span class="sel">.toggle-chip--off</span> {
+  <span class="prop">background</span>: <span class="val">#FFFFFF</span>; <span class="prop">color</span>: <span class="val">#003366</span>; <span class="prop">border</span>: <span class="val">1px solid #E2E5E8</span>;
+}</div>
+
+<!-- ============================== CARDS ============================== -->
+<h2 id="cards">Cards &amp; Layout</h2>
+
+<div class="spec-card">
+<table>
+<tr><th>Component</th><th>Width</th><th>bg</th><th>Radius</th><th>Shadow</th><th>Figma Node</th></tr>
+<tr><td>Center info card</td><td>336px</td><td><code>#FFFFFF</code></td><td>12px</td><td>shadow-raised</td><td>Frame 243 (336×136)</td></tr>
+<tr><td>Meeting details card</td><td>336px</td><td><code>#FFFFFF</code></td><td>12px</td><td>shadow-raised</td><td>Frame 130897 (328×88)</td></tr>
+<tr><td>History row</td><td>336px / 56px height</td><td><code>#FFFFFF</code></td><td>16px</td><td>shadow-raised</td><td>Frame 130897 (328×56)</td></tr>
+<tr><td>Customer card (GRT)</td><td>336px / 72px+ height</td><td><code>#FFFFFF</code></td><td>16px</td><td>shadow-raised</td><td>Frame 48096157 (328×88)</td></tr>
+<tr><td>Timeline card (past)</td><td>flex</td><td><code>#FFFFFF</code></td><td>12px</td><td>none (1px border)</td><td>—</td></tr>
+<tr><td>Timeline card (current)</td><td>flex</td><td><code>#E9F4FE</code></td><td>12px</td><td>none</td><td>—</td></tr>
+</table>
+</div>
+
+<!-- ============================== SHEETS ============================== -->
+<h2 id="sheets">Bottom Sheet &amp; Overlay</h2>
+
+<div class="code-block" id="sheet-code"><button class="copy-btn" onclick="copyCode('sheet-code')">Copy CSS</button><span class="sel">.overlay</span> {
+  <span class="prop">background</span>: <span class="val">rgba(45, 79, 126, 0.55)</span>;  <span class="comment">/* Faded background component */</span>
+}
+
+<span class="sel">.bottom-sheet</span> {
+  <span class="prop">background</span>: <span class="val">#FFFFFF</span>;
+  <span class="prop">border-radius</span>: <span class="val">24px 24px 0 0</span>;
+  <span class="prop">box-shadow</span>: <span class="val">0 -4px 16px rgba(0, 51, 102, 0.12)</span>;
+  <span class="prop">padding-bottom</span>: <span class="val">24px</span>;
+}
+
+<span class="sel">.bottom-sheet__handle</span> {
+  <span class="prop">width</span>: <span class="val">40px</span>; <span class="prop">height</span>: <span class="val">4px</span>;
+  <span class="prop">background</span>: <span class="val">#D8DCE0</span>;
+  <span class="prop">border-radius</span>: <span class="val">2px</span>;
+  <span class="prop">margin</span>: <span class="val">10px auto 16px</span>;
+}
+
+<span class="sel">.bottom-sheet__close</span> {
+  <span class="prop">width</span>: <span class="val">32px</span>; <span class="prop">height</span>: <span class="val">32px</span>;
+  <span class="prop">background</span>: <span class="val">#ECEEF0</span>;
+  <span class="prop">border-radius</span>: <span class="val">50%</span>;
+}</div>
+
+<!-- ============================== TIMELINE ============================== -->
+<h2 id="timeline">Timeline (Meeting Place History)</h2>
+
+<div class="spec-card">
+<table>
+<tr><th>Element</th><th>Spec</th></tr>
+<tr><td>Track width</td><td>20px column, centered</td></tr>
+<tr><td>Dot (current)</td><td>10×10px circle, <code>bg:#2196F3</code></td></tr>
+<tr><td>Dot (past)</td><td>10×10px circle, <code>bg:#D8DCE0</code></td></tr>
+<tr><td>Connector line</td><td>2px wide, <code>bg:#E2E5E8</code></td></tr>
+<tr><td>Current card</td><td><code>bg:#E9F4FE</code>, <code>border:1px #D3EAFD</code>, <code>border-left:3px #2196F3</code>, r:12px</td></tr>
+<tr><td>Past card</td><td><code>bg:#FFFFFF</code>, <code>border:1px #E2E5E8</code>, r:12px</td></tr>
+<tr><td>Card padding</td><td>16px all sides</td></tr>
+<tr><td>Card gap</td><td>12px margin-bottom</td></tr>
+<tr><td>"CURRENT" label</td><td>Caption 1 SBC: 600 12px, 5% spacing, uppercase, plain <code>#1A9F00</code> text (no badge bg)</td></tr>
+</table>
+</div>
+
+<!-- ============================== TOAST ============================== -->
+<h2 id="toast">Toast / Snackbar</h2>
+
+<div class="preview">
+  <div style="width:320px;padding:8px 20px;border-radius:8px;background:#E8F5E5;border:1px solid #75C666;display:flex;align-items:center;gap:8px;font:600 12px Inter;color:#003366">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A9F00" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+    Meeting details updated successfully
+  </div>
+</div>
+
+<div class="code-block" id="toast-code"><button class="copy-btn" onclick="copyCode('toast-code')">Copy CSS</button><span class="sel">.toast</span> {
+  <span class="prop">width</span>: <span class="val">320px</span>;
+  <span class="prop">padding</span>: <span class="val">8px 20px</span>;
+  <span class="prop">border-radius</span>: <span class="val">8px</span>;
+  <span class="prop">font</span>: <span class="val">600 12px/1.4 'Inter'</span>;
+  <span class="prop">color</span>: <span class="val">#003366</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">gap</span>: <span class="val">8px</span>;
+}
+<span class="sel">.toast--success</span> { <span class="prop">background</span>: <span class="val">#E8F5E5</span>; <span class="prop">border</span>: <span class="val">1px solid #75C666</span>; }
+<span class="sel">.toast--warning</span> { <span class="prop">background</span>: <span class="val">#FEF6EC</span>; <span class="prop">border</span>: <span class="val">1px solid #F4A246</span>; }
+<span class="sel">.toast--error</span>   { <span class="prop">background</span>: <span class="val">#F9EBEB</span>; <span class="prop">border</span>: <span class="val">1px solid #C53434</span>; }</div>
+
+<!-- ============================== SCREENS ============================== -->
+<h2 id="screens">Screen Specifications</h2>
+
+<div class="spec-card">
+<table>
+<tr><th>Screen</th><th>Page bg</th><th>Header</th><th>Key Components</th></tr>
+<tr><td>1. GRT Main</td><td><code>#F5F6F7</code></td><td>64px, light bg</td><td>Center card (336px r:12), Meeting card, History row, Chip filters (r:100), Customer cards (r:16), Button disabled</td></tr>
+<tr><td>2. Edit: Public Place</td><td><code>#FFFFFF</code></td><td>64px, white bg</td><td>Filled inputs (56px, #ECEEF0, r:16), Toggle chips, Button primary</td></tr>
+<tr><td>3. Edit: Customer's Residence</td><td><code>#FFFFFF</code></td><td>64px, white bg</td><td>Same + Customer selector dropdown (#ECEEF0, r:16)</td></tr>
+<tr><td>4. Save Disabled</td><td><code>#FFFFFF</code></td><td>64px, white bg</td><td>Same + Empty selector + Button disabled</td></tr>
+<tr><td>5. Select Customer</td><td><code>#FFFFFF</code></td><td>dimmed (0.35 opacity)</td><td>Bottom sheet (r:24 top), Search bar (#ECEEF0 r:16), Avatar list (48px), Radio buttons</td></tr>
+<tr><td>6. Place History</td><td><code>#FFFFFF</code></td><td>dimmed</td><td>Bottom sheet, Timeline (dot+line+cards), CURRENT label (Caption 1 SBC green)</td></tr>
+<tr><td>7. Empty History</td><td><code>#FFFFFF</code></td><td>dimmed</td><td>Bottom sheet, Empty state illustration + text (H5)</td></tr>
+<tr><td>8. Save Success</td><td><code>#F5F6F7</code></td><td>64px, light bg</td><td>Same as Screen 1 + Toast success</td></tr>
+</table>
+</div>
+
+<div class="spec-card">
+<h4>Layout Constants</h4>
+<table>
+<tr><th>Constant</th><th>Value</th><th>Source</th></tr>
+<tr><td>Screen width</td><td>360px</td><td>Figma: Android Large</td></tr>
+<tr><td>Status bar height</td><td>32px</td><td>Figma: Status Bar component</td></tr>
+<tr><td>Header height</td><td>64px</td><td>Figma: Frame 48096106</td></tr>
+<tr><td>Content horizontal padding</td><td>12px (for 336px cards) / 20px (for 320px content)</td><td>Figma layout</td></tr>
+<tr><td>Content vertical gap</td><td>16px</td><td>Screenshot measurement</td></tr>
+<tr><td>Back button</td><td>40×40px, bg:#FFF, r:40px, shadow-raised</td><td>Figma: Frame 48096023</td></tr>
+<tr><td>Title font</td><td>Inter 16px w700, #003366</td><td>Typography: Sub Heading 1</td></tr>
+</table>
+</div>
+
+<p style="text-align:center;font-size:12px;color:var(--muted);margin-top:40px;padding:20px 0;border-top:1px solid var(--border)">
+  Generated by Sally (UX Designer) &bull; 2026-02-14 &bull; Figma: <code>ynrZ50gvTh5yb20gwciKcI</code><br>
+  View screens: <a href="grt-meeting-details-enhanced.html">grt-meeting-details-enhanced.html</a>
+</p>
+
+</div>
+
+<script>
+function copyCode(id) {
+  const el = document.getElementById(id);
+  const text = el.textContent.replace('Copy CSS', '').replace('Copy', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = el.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy CSS'; }, 1500);
+  });
+}
+</script>
+</body>
+</html>
