@@ -96,6 +96,10 @@ code { font-family: var(--mono); font-size: 12px; background: var(--code-bg); pa
   <a href="#sheets">Bottom Sheet</a>
   <a href="#timeline">Timeline</a>
   <a href="#toast">Toast</a>
+  <a href="#icons">Icons</a>
+  <a href="#tabs">Tabs</a>
+  <a href="#filters">Filters & Sort</a>
+  <a href="#dialogs">Dialogs</a>
   <a href="#screens">Screen Specs</a>
 </nav>
 
@@ -468,6 +472,127 @@ code { font-family: var(--mono); font-size: 12px; background: var(--code-bg); pa
 <span class="sel">.toast--success</span> { <span class="prop">background</span>: <span class="val">#E8F5E5</span>; <span class="prop">border</span>: <span class="val">1px solid #75C666</span>; }
 <span class="sel">.toast--warning</span> { <span class="prop">background</span>: <span class="val">#FEF6EC</span>; <span class="prop">border</span>: <span class="val">1px solid #F4A246</span>; }
 <span class="sel">.toast--error</span>   { <span class="prop">background</span>: <span class="val">#F9EBEB</span>; <span class="prop">border</span>: <span class="val">1px solid #C53434</span>; }</div>
+
+<!-- ============================== ICONS ============================== -->
+<h2 id="icons">Icons & Icon Buttons</h2>
+
+<div class="spec-card">
+<h3>Icon Button</h3>
+<table>
+<tr><th>Property</th><th>Value</th></tr>
+<tr><td>Container</td><td>48×48px white circle</td></tr>
+<tr><td>Icon color</td><td>#2196F3 (primary blue)</td></tr>
+<tr><td>Icon size</td><td>24×24px</td></tr>
+<tr><td>Shadow</td><td>0 2px 8px rgba(27,36,44,0.08)</td></tr>
+<tr><td>Label</td><td>Inter 12px w500, #003366, below icon</td></tr>
+</table>
+</div>
+
+<div class="code-block"><button class="copy-btn">Copy</button><span class="sel">.icon-btn</span> {
+  <span class="prop">width</span>: <span class="val">48px</span>;
+  <span class="prop">height</span>: <span class="val">48px</span>;
+  <span class="prop">background</span>: <span class="val">#FFFFFF</span>;
+  <span class="prop">border-radius</span>: <span class="val">50%</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;
+  <span class="prop">box-shadow</span>: <span class="val">0 2px 8px rgba(27,36,44,0.08)</span>;
+}
+<span class="sel">.icon-btn svg</span> { <span class="prop">width</span>: <span class="val">24px</span>; <span class="prop">height</span>: <span class="val">24px</span>; <span class="prop">fill</span>: <span class="val">#2196F3</span>; }</div>
+
+<!-- ============================== TABS ============================== -->
+<h2 id="tabs">Tabs</h2>
+
+<div class="spec-card">
+<h3>Horizontal Tab Bar</h3>
+<table>
+<tr><th>State</th><th>Text Color</th><th>Weight</th><th>Underline</th></tr>
+<tr><td>Active</td><td>#003366</td><td>600</td><td>2px solid #2196F3</td></tr>
+<tr><td>Inactive</td><td>#94A3B8</td><td>500</td><td>None</td></tr>
+</table>
+
+<h4>Specs</h4>
+<ul style="margin: 12px 0 0 20px; line-height: 1.8;">
+<li>Font: Inter 15px</li>
+<li>Tab spacing: 24px between tabs</li>
+<li>Underline: 2px height, full tab width</li>
+<li>Padding: 12px vertical, 16px horizontal</li>
+</ul>
+</div>
+
+<div class="code-block"><button class="copy-btn">Copy</button><span class="sel">.tab-bar</span> { <span class="prop">display</span>: <span class="val">flex</span>; <span class="prop">gap</span>: <span class="val">24px</span>; <span class="prop">border-bottom</span>: <span class="val">1px solid #E2E5E8</span>; }
+<span class="sel">.tab</span> {
+  <span class="prop">padding</span>: <span class="val">12px 16px</span>;
+  <span class="prop">font</span>: <span class="val">500 15px Inter</span>;
+  <span class="prop">color</span>: <span class="val">#94A3B8</span>;
+  <span class="prop">border-bottom</span>: <span class="val">2px solid transparent</span>;
+  <span class="prop">cursor</span>: <span class="val">pointer</span>;
+}
+<span class="sel">.tab.active</span> { <span class="prop">color</span>: <span class="val">#003366</span>; <span class="prop">font-weight</span>: <span class="val">600</span>; <span class="prop">border-color</span>: <span class="val">#2196F3</span>; }</div>
+
+<!-- ============================== FILTERS & SORT ============================== -->
+<h2 id="filters">Filters & Sort</h2>
+
+<div class="spec-card">
+<h3>Filter/Sort Sheet</h3>
+<p><strong>Full-screen modal with category sidebar and radio options</strong></p>
+
+<table>
+<tr><th>Element</th><th>Specs</th></tr>
+<tr><td>Header</td><td>"Filters" (Inter 20px w700 #003366), "Reset" link (Inter 16px #2196F3) on right</td></tr>
+<tr><td>Category sidebar</td><td>Left panel, light grey bg (#F5F6F7), Inter 14px w500 #003366</td></tr>
+<tr><td>Radio buttons</td><td>#2196F3 outline, 20px diameter, selected has blue fill</td></tr>
+<tr><td>Options text</td><td>Inter 15px w500 #003366</td></tr>
+<tr><td>Apply button</td><td>Full-width pill button at bottom (#2196F3 bg, white text)</td></tr>
+</table>
+</div>
+
+<div class="code-block"><button class="copy-btn">Copy</button><span class="sel">.filter-sheet</span> {
+  <span class="prop">position</span>: <span class="val">fixed</span>;
+  <span class="prop">inset</span>: <span class="val">0</span>;
+  <span class="prop">background</span>: <span class="val">#FFFFFF</span>;
+  <span class="prop">z-index</span>: <span class="val">1000</span>;
+}
+<span class="sel">.filter-sidebar</span> {
+  <span class="prop">width</span>: <span class="val">40%</span>;
+  <span class="prop">background</span>: <span class="val">#F5F6F7</span>;
+  <span class="prop">padding</span>: <span class="val">16px</span>;
+}
+<span class="sel">.filter-category</span> { <span class="prop">font</span>: <span class="val">500 14px Inter</span>; <span class="prop">color</span>: <span class="val">#003366</span>; <span class="prop">padding</span>: <span class="val">12px 8px</span>; }
+<span class="sel">.filter-radio</span> { <span class="prop">width</span>: <span class="val">20px</span>; <span class="prop">height</span>: <span class="val">20px</span>; <span class="prop">border</span>: <span class="val">2px solid #2196F3</span>; <span class="prop">border-radius</span>: <span class="val">50%</span>; }</div>
+
+<!-- ============================== DIALOGS ============================== -->
+<h2 id="dialogs">Dialogs & Modals</h2>
+
+<div class="spec-card">
+<h3>Selection Dialog</h3>
+<table>
+<tr><th>Property</th><th>Value</th></tr>
+<tr><td>Container</td><td>White, r:16px, centered, max-width 90%</td></tr>
+<tr><td>Title</td><td>Inter 16px w600 #003366, 16px padding</td></tr>
+<tr><td>Search input</td><td>Light grey bg (#F5F6F7), r:8px, magnifier icon</td></tr>
+<tr><td>List items</td><td>Radio buttons (#2196F3), Inter 14px #003366</td></tr>
+<tr><td>Shadow</td><td>0 4px 24px rgba(0,0,0,0.16)</td></tr>
+<tr><td>Backdrop</td><td>rgba(0,0,0,0.5)</td></tr>
+</table>
+</div>
+
+<div class="code-block"><button class="copy-btn">Copy</button><span class="sel">.dialog-backdrop</span> {
+  <span class="prop">position</span>: <span class="val">fixed</span>;
+  <span class="prop">inset</span>: <span class="val">0</span>;
+  <span class="prop">background</span>: <span class="val">rgba(0,0,0,0.5)</span>;
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;
+}
+<span class="sel">.dialog</span> {
+  <span class="prop">background</span>: <span class="val">#FFFFFF</span>;
+  <span class="prop">border-radius</span>: <span class="val">16px</span>;
+  <span class="prop">max-width</span>: <span class="val">90%</span>;
+  <span class="prop">max-height</span>: <span class="val">80vh</span>;
+  <span class="prop">padding</span>: <span class="val">16px</span>;
+  <span class="prop">box-shadow</span>: <span class="val">0 4px 24px rgba(0,0,0,0.16)</span>;
+}</div>
 
 <!-- ============================== SCREENS ============================== -->
 <h2 id="screens">Screen Specifications</h2>
