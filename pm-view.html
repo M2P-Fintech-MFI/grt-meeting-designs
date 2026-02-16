@@ -87,7 +87,8 @@
   --r-lg:   12px;   /* Center info cards (Frame 243 r:12px), CTAs */
   --r-xl:   16px;   /* Customer cards (328×88 r:16px), meeting card, dialog */
   --r-2xl:  24px;   /* Camera/action buttons */
-  --r-pill: 40px;   /* Button pill, back button, filter chips */
+  --r-btn:  4px;    /* UPDATED: Action buttons 4px (matches Kotak SaaS) */
+  --r-pill: 40px;   /* Toggle chips, back button - pill shape */
   --r-full: 100px;  /* Chip dots (GRT filter chips r:100px) */
 
   /* ─── TYPOGRAPHY (Figma Components > Typography) ─── */
@@ -388,11 +389,11 @@ body {
 .cust-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 .cust-id { font-size: 12px; font-weight: 400; color: var(--text-secondary); margin-top: 1px; }
 
-/* ─── BUTTON (Figma: Button component, pill r:40px, 44px height) ─── */
+/* ─── BUTTON (Kotak SaaS: 4px radius, 44px height) ─── */
 .btn {
   width: 320px;                     /* Figma: Button 320×44 */
   height: 44px;                     /* Figma: 44px */
-  border-radius: var(--r-pill);    /* Figma: r:40px */
+  border-radius: var(--r-btn);     /* UPDATED: 4px matches Kotak SaaS */
   font-family: var(--font);
   font-size: 14px;                  /* Figma: Inter 14px */
   font-weight: 700;                /* Figma: w700 */
